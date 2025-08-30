@@ -1,6 +1,9 @@
+![Logo](logo.png)
 # Clinical Trials MCP Server
 
 A comprehensive Model Context Protocol (MCP) server that provides access to the ClinicalTrials.gov API, enabling researchers, clinicians, and developers to access real-time clinical trial data programmatically.
+
+**Developed by [Augmented Nature](https://augmentednature.ai)**
 
 ## Overview
 
