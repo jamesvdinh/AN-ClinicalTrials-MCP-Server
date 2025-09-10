@@ -81,7 +81,7 @@ interface StudyDetailResponse {
   studies: Study[];
 }
 
-class ClinicalTrialsServer {
+export class ClinicalTrialsServer {
   private server: Server;
   private axiosInstance;
 
@@ -717,7 +717,7 @@ class ClinicalTrialsServer {
     });
   }
 
-  private async handleSearchStudies(args: any) {
+  public async handleSearchStudies(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
@@ -786,7 +786,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetStudyDetails(args: any) {
+  public async handleGetStudyDetails(args: any) {
     if (!args?.nctId || !/^NCT\d{8}$/.test(args.nctId)) {
       throw new McpError(ErrorCode.InvalidParams, 'Valid NCT ID is required (format: NCT########)');
     }
@@ -844,7 +844,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByLocation(args: any) {
+  public async handleSearchByLocation(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
@@ -899,7 +899,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByCondition(args: any) {
+  public async handleSearchByCondition(args: any) {
     if (!args?.condition) {
       throw new McpError(ErrorCode.InvalidParams, 'Condition parameter is required');
     }
@@ -958,7 +958,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetTrialStatistics(args: any) {
+  public async handleGetTrialStatistics(args: any) {
     // For statistics, we'll make a broader search and analyze the results
     const params: any = {
       'format': 'json',
@@ -1090,7 +1090,7 @@ class ClinicalTrialsServer {
     return groups;
   }
 
-  private async handleSearchBySponsor(args: any) {
+  public async handleSearchBySponsor(args: any) {
     if (!args?.sponsor) {
       throw new McpError(ErrorCode.InvalidParams, 'Sponsor parameter is required');
     }
@@ -1139,7 +1139,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByIntervention(args: any) {
+  public async handleSearchByIntervention(args: any) {
     if (!args?.intervention) {
       throw new McpError(ErrorCode.InvalidParams, 'Intervention parameter is required');
     }
@@ -1189,7 +1189,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetRecruitingStudies(args: any) {
+  public async handleGetRecruitingStudies(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10,
@@ -1253,7 +1253,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByDateRange(args: any) {
+  public async handleSearchByDateRange(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
@@ -1322,7 +1322,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetStudiesWithResults(args: any) {
+  public async handleGetStudiesWithResults(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10,
@@ -1383,7 +1383,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchRareDiseases(args: any) {
+  public async handleSearchRareDiseases(args: any) {
     if (!args?.rareDisease) {
       throw new McpError(ErrorCode.InvalidParams, 'Rare disease parameter is required');
     }
@@ -1444,7 +1444,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetPediatricStudies(args: any) {
+  public async handleGetPediatricStudies(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10,
@@ -1522,7 +1522,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetSimilarStudies(args: any) {
+  public async handleGetSimilarStudies(args: any) {
     if (!args?.nctId || !/^NCT\d{8}$/.test(args.nctId)) {
       throw new McpError(ErrorCode.InvalidParams, 'Valid NCT ID is required (format: NCT########)');
     }
@@ -1612,7 +1612,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByPrimaryOutcome(args: any) {
+  public async handleSearchByPrimaryOutcome(args: any) {
     if (!args?.outcome) {
       throw new McpError(ErrorCode.InvalidParams, 'Outcome parameter is required');
     }
@@ -1666,7 +1666,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchByEligibilityCriteria(args: any) {
+  public async handleSearchByEligibilityCriteria(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
@@ -1755,7 +1755,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleGetStudyTimeline(args: any) {
+  public async handleGetStudyTimeline(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
@@ -1835,7 +1835,7 @@ class ClinicalTrialsServer {
     }
   }
 
-  private async handleSearchInternationalStudies(args: any) {
+  public async handleSearchInternationalStudies(args: any) {
     const params: any = {
       'format': 'json',
       'pageSize': args?.pageSize || 10
