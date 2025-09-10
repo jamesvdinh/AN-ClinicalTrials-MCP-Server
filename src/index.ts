@@ -118,6 +118,10 @@ export class ClinicalTrialsServer {
     });
   }
 
+  public getServer(): Server {
+    return this.server;
+  }
+
   private setupToolHandlers() {
     // List available tools
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({

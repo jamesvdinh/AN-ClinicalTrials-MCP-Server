@@ -41,6 +41,9 @@ export class ClinicalTrialsServer {
             process.exit(0);
         });
     }
+    getServer() {
+        return this.server;
+    }
     setupToolHandlers() {
         // List available tools
         this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
