@@ -20,6 +20,15 @@ app.use(express.json());
 
 // Create MCP server instance
 const mcpServer = new ClinicalTrialsServer();
+const server = mcpServer.getServer();
+
+// Create a single HTTP transport and connect it to the MCP server
+const transport = new StreamableHTTPServerTransport({
+  sessionIdGenerator: undefined,
+  enableJsonResponse: process.env.ENABLE_JSON_RESPONSE === 'false' ? false : true,
+});
+// Connect once so incoming HTTP requests are routed to the MCP server
+await server.connect(transport);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -300,21 +309,37 @@ app.post('/api/search_international_studies', (req, res) => {
 
 app.post('/', async (req, res) => {
   try {
-    const server = new McpServer({
-      name: "Clinical Trials MCP Server",
-      version: "1.0.0",
-    });
-
-    const transport = new StreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
-    });
-
-    res.on('close', () => {
-      transport.close();
-    });
-
-    // await server.connect(transport);
     await transport.handleRequest(req, res, req.body);
+  } catch {
+    if (!res.headersSent) {
+      res.status(500).json({
+        jsonrpc: '2.0',
+        error: { code: -32603, message: 'Internal server error' },
+        id: null,
+      });
+    }
+  }
+});
+
+// Streamable HTTP GET (SSE stream) endpoint
+app.get('/', async (req, res) => {
+  try {
+    await transport.handleRequest(req as any, res as any, undefined);
+  } catch {
+    if (!res.headersSent) {
+      res.status(500).json({
+        jsonrpc: '2.0',
+        error: { code: -32603, message: 'Internal server error' },
+        id: null,
+      });
+    }
+  }
+});
+
+// Optional: session cleanup (no-op in stateless mode)
+app.delete('/', async (req, res) => {
+  try {
+    await transport.handleRequest(req as any, res as any, undefined);
   } catch {
     if (!res.headersSent) {
       res.status(500).json({
